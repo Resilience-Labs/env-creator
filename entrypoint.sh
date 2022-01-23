@@ -1,4 +1,4 @@
-#!/bin/sh -l
+#!/bin/bash
 
 SUFIX=$SUFIX SECRETS=$SECRETS VARS=$VARS java -jar /app.jar
-echo "$(cat output)"
+echo "::set-output name=env_output::$(cat output)"

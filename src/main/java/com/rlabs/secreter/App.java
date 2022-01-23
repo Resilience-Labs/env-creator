@@ -27,33 +27,41 @@ public class App {
 
     try {
 
-      if (System.getenv("SECRETS") != null
-          && System.getenv("VARS") != null
-          && System.getenv("SUFIX") != null
-          && service.isJSONValid(System.getenv("SECRETS"))
-          && service.isJSONValid(System.getenv("VARS"))) {
-
-        Vars vars = mapper.readValue(System.getenv("VARS"), Vars.class);
-        Map<String, Object> secrets = mapper.readValue(System.getenv("SECRETS"), Map.class);
-        String sufix = System.getenv("SUFIX");
-
-        String output = service.generateOutput(vars, secrets, sufix);
-
-        System.out.println("OUTPUT" + output);
-        System.out.println(
-            "FORMATED: " + String.format("::set-output name=env_output::%s", output));
-
-        // Write to file
-        try (PrintStream out = new PrintStream(new FileOutputStream("output"))) {
-          out.print(String.format("::set-output name=env_output::%s", output));
-        } catch (FileNotFoundException e) {
-          e.printStackTrace();
-          throw new RuntimeException(e.getMessage(), e);
-        }
+      if (System.getenv("VARS") == null) {
+        System.out.println("WARNING: VARS empty");
       } else {
-        System.out.println("secrets, sufix and vars are mandatory");
+        if (!service.isJSONValid(System.getenv("VARS"))) {
+          System.out.println("ERROR: VARS is invilid");
+          throw new RuntimeException("Invalid JSON for VARS");
+        }
+      }
+      if (System.getenv("SECRETS") == null) {
+        System.out.println("WARNING: SECRETS empty");
+      } else {
+        if (!service.isJSONValid(System.getenv("SECRETS"))) {
+          System.out.println("ERROR: SECRETS is invilid");
+          throw new RuntimeException("Invalid JSON for SECRETS");
+        }
+      }
+      if (System.getenv("SUFIX") == null) {
+        System.out.println("WARNING: SUFIX empty");
+      }
 
-        throw new RuntimeException("Invalid input");
+      Vars vars = mapper.readValue(System.getenv("VARS"), Vars.class);
+      Map<String, Object> secrets = mapper.readValue(System.getenv("SECRETS"), Map.class);
+      String sufix = System.getenv("SUFIX");
+
+      String output = service.generateOutput(vars, secrets, sufix);
+
+      System.out.println("OUTPUT" + output);
+      System.out.println("FORMATED: " + String.format("::set-output name=env_output::%s", output));
+
+      // Write to file
+      try (PrintStream out = new PrintStream(new FileOutputStream("output"))) {
+        out.print(output);
+      } catch (FileNotFoundException e) {
+        e.printStackTrace();
+        throw new RuntimeException(e.getMessage(), e);
       }
     } catch (JsonMappingException e) {
       e.printStackTrace();
