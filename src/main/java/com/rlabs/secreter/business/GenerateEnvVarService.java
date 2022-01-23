@@ -35,11 +35,13 @@ public class GenerateEnvVarService {
     }
 
     // Public data has high priority
-    vars.getPublic().entrySet().stream()
-        .forEach(
-            k -> {
-              output.put(k.getKey(), k.getValue());
-            });
+    if (vars.getPublic() != null && !vars.getPublic().isEmpty()) {
+      vars.getPublic().entrySet().stream()
+          .forEach(
+              k -> {
+                output.put(k.getKey(), k.getValue());
+              });
+    }
 
     System.out.println(
         String.format("::set-output name=env_output::%s", mapper.writeValueAsString(output)));
