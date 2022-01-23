@@ -54,7 +54,7 @@ public class App {
       String output = service.generateOutput(vars, secrets, sufix);
 
       System.out.println("OUTPUT" + output);
-      System.out.println(String.format("::set-output name=env_output::%s", output));
+      System.out.println(String.format("::set-output name=env-output::%s", output));
 
       // Write to file
       try (PrintStream out = new PrintStream(new FileOutputStream("output"))) {

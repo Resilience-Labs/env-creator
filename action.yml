@@ -11,7 +11,7 @@ inputs:
     description: 'Stage such as dev, prod, qa'
     required: true
 outputs:
-  env_output:
+  env-output:
     description: 'Final JSON object with private and public secrets (public has high priority)'
 runs:
   using: 'docker'
