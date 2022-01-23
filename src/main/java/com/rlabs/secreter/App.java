@@ -32,6 +32,10 @@ public class App {
         service.generateOutput(vars, secrets, sufix);
       } else {
         System.out.println("secrets, sufix and vars are mandatory");
+        System.out.println("VARS: " + System.getenv("VARS"));
+        System.out.println("SECRETS: " + System.getenv("SECRETS"));
+        System.out.println("SUFIX: " + System.getenv("SUFIX"));
+
         throw new RuntimeException("Invalid input");
       }
     } catch (JsonMappingException e) {
