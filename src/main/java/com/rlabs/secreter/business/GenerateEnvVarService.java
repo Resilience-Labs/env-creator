@@ -20,7 +20,7 @@ public class GenerateEnvVarService {
     }
   }
 
-  public void generateOutput(Vars vars, Map<String, Object> secrets, String sufix)
+  public String generateOutput(Vars vars, Map<String, Object> secrets, String sufix)
       throws JsonProcessingException {
     Map<String, Object> output = new HashMap<>();
 
@@ -43,7 +43,6 @@ public class GenerateEnvVarService {
               });
     }
 
-    System.out.println(
-        String.format("::set-output name=env_output::%s", mapper.writeValueAsString(output)));
+    return mapper.writeValueAsString(output);
   }
 }

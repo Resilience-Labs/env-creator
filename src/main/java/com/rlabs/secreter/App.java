@@ -17,6 +17,7 @@ public class App {
 
     GenerateEnvVarService service = new GenerateEnvVarService();
 
+    System.out.println("INPUT");
     System.out.println("VARS: " + System.getenv("VARS"));
     System.out.println("SECRETS: " + System.getenv("SECRETS"));
     System.out.println("SUFIX: " + System.getenv("SUFIX"));
@@ -33,7 +34,12 @@ public class App {
         Map<String, Object> secrets = mapper.readValue(System.getenv("SECRETS"), Map.class);
         String sufix = System.getenv("SUFIX");
 
-        service.generateOutput(vars, secrets, sufix);
+        String output = service.generateOutput(vars, secrets, sufix);
+
+        System.out.println("OUTPUT");
+        System.out.println(output);
+
+        System.out.println(String.format("::set-output name=env_output::%s", output));
       } else {
         System.out.println("secrets, sufix and vars are mandatory");
 
