@@ -11,8 +11,6 @@ import com.rlabs.secreter.domain.Vars;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
-import java.nio.charset.StandardCharsets;
-import java.util.Base64;
 import java.util.Map;
 
 public class App {
@@ -60,10 +58,10 @@ public class App {
 
       // Write to file
       try (PrintStream out = new PrintStream(new FileOutputStream("output"))) {
-        String encoded =
-            Base64.getEncoder().encodeToString(output.getBytes(StandardCharsets.UTF_8));
+        // String encoded =
+        // Base64.getEncoder().encodeToString(output.getBytes(StandardCharsets.UTF_8));
 
-        out.print(encoded);
+        out.print(output);
       } catch (FileNotFoundException e) {
         e.printStackTrace();
         throw new RuntimeException(e.getMessage(), e);
