@@ -8,6 +8,9 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rlabs.secreter.business.GenerateEnvVarService;
 import com.rlabs.secreter.domain.Vars;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.PrintStream;
 import java.util.Map;
 
 public class App {
@@ -40,6 +43,14 @@ public class App {
         System.out.println(output);
 
         System.out.println(String.format("::set-output name=env_output::%s", output));
+
+        // Write to file
+        try (PrintStream out = new PrintStream(new FileOutputStream("output"))) {
+          out.print(output);
+        } catch (FileNotFoundException e) {
+          e.printStackTrace();
+          throw new RuntimeException(e.getMessage(), e);
+        }
       } else {
         System.out.println("secrets, sufix and vars are mandatory");
 
