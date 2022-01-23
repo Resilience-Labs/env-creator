@@ -13,13 +13,15 @@ public class GenerateEnvVarService {
       throws JsonProcessingException {
     Map<String, Object> output = new HashMap<>();
 
-    vars.getPrivate().stream()
-        .forEach(
-            secret -> {
-              secrets.entrySet().stream()
-                  .filter(k -> k.getKey().equalsIgnoreCase(String.format("%s_%s", secret, sufix)))
-                  .forEach(s -> output.put(secret, s.getValue()));
-            });
+    if (vars.getPrivate() != null && secrets != null) {
+      vars.getPrivate().stream()
+          .forEach(
+              secret -> {
+                secrets.entrySet().stream()
+                    .filter(k -> k.getKey().equalsIgnoreCase(String.format("%s_%s", secret, sufix)))
+                    .forEach(s -> output.put(secret, s.getValue()));
+              });
+    }
 
     // Public data has high priority
     vars.getPublic().entrySet().stream()
