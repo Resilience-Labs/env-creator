@@ -42,11 +42,9 @@ public class App {
         System.out.println("OUTPUT");
         System.out.println(output);
 
-        System.out.println(String.format("::set-output name=env_output::%s", output));
-
         // Write to file
         try (PrintStream out = new PrintStream(new FileOutputStream("output"))) {
-          out.print(output);
+          out.print(String.format("::set-output name=env_output::%s", output));
         } catch (FileNotFoundException e) {
           e.printStackTrace();
           throw new RuntimeException(e.getMessage(), e);
