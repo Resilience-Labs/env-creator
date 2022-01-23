@@ -17,6 +17,10 @@ public class App {
 
     GenerateEnvVarService service = new GenerateEnvVarService();
 
+    System.out.println("VARS: " + System.getenv("VARS"));
+    System.out.println("SECRETS: " + System.getenv("SECRETS"));
+    System.out.println("SUFIX: " + System.getenv("SUFIX"));
+
     try {
 
       if (System.getenv("SECRETS") != null
@@ -32,9 +36,6 @@ public class App {
         service.generateOutput(vars, secrets, sufix);
       } else {
         System.out.println("secrets, sufix and vars are mandatory");
-        System.out.println("VARS: " + System.getenv("VARS"));
-        System.out.println("SECRETS: " + System.getenv("SECRETS"));
-        System.out.println("SUFIX: " + System.getenv("SUFIX"));
 
         throw new RuntimeException("Invalid input");
       }
