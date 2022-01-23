@@ -7,7 +7,6 @@ inputs:
   vars:
     description: 'JSON string with fields public (JSON) and private (list of secret names)'
     required: true
-
   sufix:
     description: 'Stage such as dev, prod, qa'
     required: true

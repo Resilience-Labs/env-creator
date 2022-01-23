@@ -39,8 +39,9 @@ public class App {
 
         String output = service.generateOutput(vars, secrets, sufix);
 
-        System.out.println("OUTPUT");
-        System.out.println(output);
+        System.out.println("OUTPUT" + output);
+        System.out.println(
+            "FORMATED: " + String.format("::set-output name=env_output::%s", output));
 
         // Write to file
         try (PrintStream out = new PrintStream(new FileOutputStream("output"))) {

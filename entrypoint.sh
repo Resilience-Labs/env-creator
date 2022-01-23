@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -l
 
 SUFIX=$SUFIX SECRETS=$SECRETS VARS=$VARS java -jar /app.jar
-echo $(cat output)
+echo "$(cat output)"
