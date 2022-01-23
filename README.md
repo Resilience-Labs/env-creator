@@ -30,7 +30,7 @@ jobs:
     steps:
       - name: Extract environment variables
         id: env-creator
-        uses: Resilience-Labs/secreter-injector-action@v21
+        uses: Resilience-Labs/env-creator-action@v1
         env:
           SUFIX: prod
           SECRETS: ${{ toJson(secrets) }}
