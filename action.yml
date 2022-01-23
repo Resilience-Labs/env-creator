@@ -1,0 +1,23 @@
+name: 'Environment Injector'
+description: 'Merge public and private environment variables for sufix stage (dev, prod, qa)'
+inputs:
+  secrets:
+    description: 'JSON string with key-value pair (without expansible nodes)'
+    required: true
+  vars:
+    description: 'JSON string with fields public (JSON) and private (list of secret names)'
+    required: true
+
+  sufix:
+    description: 'Stage such as dev, prod, qa'
+    required: true
+outputs:
+  env_output:
+    description: 'Final JSON object with private and public secrets (public has high priority)'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.secrets }}
+    - ${{ inputs.vars }}
+    - ${{ inputs.sufix }}
