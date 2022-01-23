@@ -3,11 +3,22 @@ package com.rlabs.secreter.business;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rlabs.secreter.domain.Vars;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
 public class GenerateEnvVarService {
   private final ObjectMapper mapper = new ObjectMapper();
+
+  public boolean isJSONValid(String jsonInString) {
+    try {
+      final ObjectMapper mapper = new ObjectMapper();
+      mapper.readTree(jsonInString);
+      return true;
+    } catch (IOException e) {
+      return false;
+    }
+  }
 
   public void generateOutput(Vars vars, Map<String, Object> secrets, String sufix)
       throws JsonProcessingException {

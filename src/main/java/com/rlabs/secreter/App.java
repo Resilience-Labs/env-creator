@@ -21,7 +21,9 @@ public class App {
 
       if (System.getenv("SECRETS") != null
           && System.getenv("VARS") != null
-          && System.getenv("SUFIX") != null) {
+          && System.getenv("SUFIX") != null
+          && service.isJSONValid(System.getenv("SECRETS"))
+          && service.isJSONValid(System.getenv("VARS"))) {
 
         Vars vars = mapper.readValue(System.getenv("VARS"), Vars.class);
         Map<String, Object> secrets = mapper.readValue(System.getenv("SECRETS"), Map.class);
@@ -30,14 +32,14 @@ public class App {
         service.generateOutput(vars, secrets, sufix);
       } else {
         System.out.println("secrets, sufix and vars are mandatory");
-        System.exit(17);
+        throw new RuntimeException("Invalid input");
       }
     } catch (JsonMappingException e) {
       e.printStackTrace();
-      System.exit(3);
+      throw new RuntimeException(e.getMessage(), e);
     } catch (JsonProcessingException e) {
       e.printStackTrace();
-      System.exit(5);
+      throw new RuntimeException(e.getMessage(), e);
     }
   }
 }
